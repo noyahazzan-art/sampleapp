@@ -1,0 +1,21 @@
+# 示例 azure 配置（参考）
+name: sampleapp-deploy
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+      - name: Build
+        run: dotnet build src/SampleApp/SampleApp.csproj -c Release
+      - name: Deploy Bicep
+        run: |
+          az login --use-device-code
+          az deployment group create --resource-group ${{ secrets.AZURE_RG }} --template-file infra/main.bicep --parameters location=${{ secrets.AZURE_LOCATION }}

@@ -1,0 +1,16 @@
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.nupkg
+*.pssproj
+.vscode/
+*.db
+*.Log
+
+# Rider
+.idea/
+
+# Publish
+publish/
